@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - School Management{% endblock %}
+
+{% block content %}
+    <div class="text-center fade-in">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome to School Management</h1>
+        <p class="text-lg text-gray-600 mb-6">Effortlessly manage students, teachers, courses, grades, and more.</p>
+        {% if not user.is_authenticated %}
+            <div class="space-x-4">
+                <a href="{% url 'login' %}" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 hover-scale transition duration-200">Login</a>
+                <a href="{% url 'register' %}" class="inline-block bg-gray-600 text-white px-6 py-3 rounded-md font-medium hover:bg-gray-700 hover-scale transition duration-200">Register</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
