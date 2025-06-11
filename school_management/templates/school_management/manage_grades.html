@@ -3,64 +3,62 @@
 {% block title %}Manage Grades - {{ course.name }}{% endblock %}
 
 {% block content %}
-    <div class="fade-in">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Manage Grades for {{ course.name }}</h2>
-        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-            <form method="POST">
+    <div class="fade-in max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-3xl font-bold text-blue-900 mb-6">Manage Grades for {{ course.name }}</h2>
+        <div class="bg-beige-100 p-6 rounded-lg shadow-md mb-8">
+            <form method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {% csrf_token %}
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label for="student_id" class="block text-sm font-medium text-gray-700">Student</label>
-                        <select name="student_id" id="student_id"
-                                class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            {% for student in students %}
-                                <option value="{{ student.id }}">{{ student.get_full_name }} ({{ student.username }})</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <label for="score" class="block text-sm font-medium text-gray-700">Score (0-20)</label>
-                        <input type="number" name="score" id="score" min="0" max="20" step="0.1"
-                               class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                               placeholder="Enter score">
-                    </div>
-                    <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                        <input type="text" name="description" id="description"
-                               class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                               placeholder="Enter description">
-                    </div>
+                <div>
+                    <label for="student_id" class="block text-sm font-medium text-gray-900">Student</label>
+                    <select name="student_id" id="student_id"
+                            class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200">
+                        {% for student in students %}
+                            <option value="{{ student.id }}">{{ student.get_full_name }} ({{ student.username }})</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 hover-scale transition duration-200">Add Grade</button>
+                <div>
+                    <label for="score" class="block text-sm font-medium text-gray-900">Score (0-20)</label>
+                    <input type="number" name="score" id="score" min="0" max="20" step="0.1"
+                           class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200"
+                           placeholder="Enter score">
+                </div>
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-900">Description</label>
+                    <input type="text" name="description" id="description"
+                           class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200"
+                           placeholder="Enter description">
+                </div>
+                <button type="submit" class="mt-4 bg-blue-900 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 hover:scale-105 transition-all duration-300">Add Grade</button>
             </form>
         </div>
-        <h3 class="text-xl font-semibold text-gray-800 mb-4">Existing Grades</h3>
-        <div class="bg-white rounded-lg shadow-md overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+        <h3 class="text-xl font-semibold text-blue-900 mb-4">Existing Grades</h3>
+        <div class="bg-beige-100 rounded-lg shadow-md overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-900">
+                <thead class="bg-blue-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Student</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Score</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase">Student</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase">Score</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase">Date</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-900">
                     {% for grade in grades %}
-                        <tr class="hover:bg-gray-50 transition duration-200">
+                        <tr class="hover:bg-blue-50 transition duration-200">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ grade.student.username }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ grade.score }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ grade.description }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ grade.description }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ grade.date }}</td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">No grades recorded.</td>
+                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-900">No grades recorded.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-        <a href="{% url 'teacher_dashboard' %}" class="mt-4 inline-block bg-gray-600 text-white px-4 py-2 rounded-md font-medium hover:bg-gray-700 hover-scale transition duration-200">Back to Dashboard</a>
+        <a href="{% url 'teacher_dashboard' %}" class="mt-4 inline-block bg-brown-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-brown-700 hover:scale-105 transition-all duration-300">Back to Dashboard</a>
     </div>
 {% endblock %}

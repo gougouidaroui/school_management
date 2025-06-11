@@ -3,47 +3,76 @@
 {% block title %}Student Dashboard{% endblock %}
 
 {% block content %}
-    <div class="fade-in">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome, {{ profile.user.get_full_name }}</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-md hover-scale transition duration-200">
-                <a href="{% url 'student_schedule' %}" class="block text-blue-600 font-medium text-center">View Schedule</a>
+    <div class="fade-in max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-3xl font-bold text-blue-900 mb-8">Welcome, {{ profile.user.username }}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-beige-100 p-6 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
+                <a href="{% url 'student_schedule' %}" class="block text-blue-900 font-semibold text-center text-lg">View Schedule</a>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-md hover-scale transition duration-200">
-                <a href="{% url 'student_grades' %}" class="block text-blue-600 font-medium text-center">View Grades</a>
+            <div class="bg-beige-100 p-6 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
+                <a href="{% url 'student_grades' %}" class="block text-blue-900 font-semibold text-center text-lg">View Grades</a>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-md hover-scale transition duration-200">
-                <a href="{% url 'student_absences' %}" class="block text-blue-600 font-medium text-center">View Absences</a>
+            <div class="bg-beige-100 p-6 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
+                <a href="{% url 'student_absences' %}" class="block text-blue-900 font-semibold text-center text-lg">View Absences</a>
             </div>
         </div>
-        <h3 class="text-xl font-semibold text-gray-800 mt-8 mb-4">Your Courses</h3>
-        <div class="bg-white rounded-lg shadow-md overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+        <h3 class="text-2xl font-semibold text-blue-900 mb-4">Your Courses</h3>
+        <div class="bg-beige-100 rounded-lg shadow-md overflow-x-auto mb-8">
+            <table class="min-w-full divide-y divide-gray-900">
+                <thead class="bg-blue-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Course</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Resources</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Teacher</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Course</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Resources</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Teacher</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-900">
                     {% for course in courses %}
-                        <tr class="hover:bg-gray-50 transition duration-200">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.name }}</td>
+                        <tr class="hover:bg-blue-50 transition duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                <a href="{% url 'course_detail' course.id %}" class="text-blue-900 hover:underline">{{ course.name }}</a>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 {% if course.resources %}
-                                    <a href="{{ course.resources.url }}" download class="text-blue-600 hover:underline">Download</a>
+                                    <a href="{{ course.resources.url }}" download class="text-blue-900 hover:underline">Download PDF</a>
                                 {% else %}
                                     None
                                 {% endif %}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ course.teacher.email }}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.teacher.email }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-900">No courses assigned.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <h3 class="text-2xl font-semibold text-blue-900 mb-4">Your Report Cards</h3>
+        <div class="bg-beige-100 rounded-lg shadow-md overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-900">
+                <thead class="bg-blue-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Semester</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Average</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Created</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-900 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-900">
+                    {% for report_card in report_cards %}
+                        <tr class="hover:bg-blue-50 transition duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ report_card.semester }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ report_card.average|floatformat:2 }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ report_card.created_at|date:"F d, Y" }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-right">
+                                <a href="{% url 'download_report_card' report_card.id %}" class="inline-block bg-blue-900 text-white px-3 py-1 rounded-md text-xs font-medium hover:bg-blue-700 hover:scale-105 transition-all duration-300">Download</a>
                             </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">No courses assigned.</td>
+                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-900">No report cards available.</td>
                         </tr>
                     {% endfor %}
                 </tbody>

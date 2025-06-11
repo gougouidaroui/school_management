@@ -1,30 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Generate Report Card - {{ student.get_full_name }}{% endblock %}
 
 {% block content %}
-    <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md fade-in">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Generate Report Card for {{ student.get_full_name }}</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="space-y-4">
-                <div>
-                    <label for="semester" class="block text-sm font-medium text-gray-700">Semester</label>
-                    <input type="text" name="semester" id="semester"
-                           class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                           placeholder="Enter semester" value="Default Semester" required>
-                </div>
-                <div>
-                    <label for="remarks" class="block text-sm font-medium text-gray-700">Remarks</label>
-                    <textarea name="remarks" id="remarks"
-                              class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Enter remarks"></textarea>
-                </div>
-                <p class="text-sm text-gray-700"><strong>Average:</strong> {{ average }}</p>
-                <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 hover-scale transition duration-200">Generate Report Card</button>
+    <div class="min-h-screen flex items-center justify-center bg-blue-50 py-12 px-4 sm:px-6 lg:px-8 fade-in">
+        <div class="max-w-md w-full">
+            <img src="{% static 'images/classroom-banner.jpg' %}" alt="Classroom Banner" class="w-full h-32 object-cover rounded-t-lg shadow-md">
+            <div class="bg-white p-8 rounded-b-lg shadow-md">
+                <h2 class="text-3xl font-bold text-blue-900 mb-6 text-center">Generate Report Card for {{ student.get_full_name }}</h2>
+                <form method="POST" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label for="semester" class="block text-sm font-medium text-gray-900">Semester</label>
+                        <input type="text" name="semester" id="semester"
+                               class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200"
+                               placeholder="Enter semester (e.g., Fall 2025)" value="Default Semester" required>
+                    </div>
+                    <div>
+                        <label for="remarks" class="block text-sm font-medium text-gray-900">Remarks (Optional)</label>
+                        <textarea name="remarks" id="remarks"
+                                  class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200"
+                                  placeholder="Enter any remarks or comments"></textarea>
+                    </div>
+                    <div class="bg-beige-100 p-4 rounded-lg">
+                        <p class="text-sm text-gray-900"><strong>Grade Average:</strong> {{ average|floatformat:2 }}</p>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-900 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 hover:scale-105 transition-all duration-300">Generate Report Card</button>
+                    <a href="{% url 'manage_students' %}" class="block w-full text-center bg-brown-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-brown-700 hover:scale-105 transition-all duration-300 mt-4">Cancel</a>
+                </form>
             </div>
-        </form>
-        <a href="{% url 'admin_dashboard' %}" class="mt-4 inline-block bg-gray-600 text-white px-4 py-2 rounded-md font-medium hover:bg-gray-700 hover-scale transition duration-200">Cancel</a>
+        </div>
     </div>
-</div>
 {% endblock %}

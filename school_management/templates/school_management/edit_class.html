@@ -1,57 +1,61 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Edit Class - {{ class_group.name }}{% endblock %}
 
 {% block content %}
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md fade-in">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Edit Class Group: {{ class_group.name }}</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="space-y-4">
-                <div>
-                    <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
-                           class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                           placeholder="Enter class name" value="{{ form.name.value|default:'' }}" required>
-                    {% if form.name.errors %}
-                        <p class="text-red-600 text-sm mt-1">{{ form.name.errors.as_text }}</p>
-                    {% endif %}
-                </div>
-                <div>
-                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}"
-                              class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Enter description">{{ form.description.value|default:'' }}</textarea>
-                    {% if form.description.errors %}
-                        <p class="text-red-600 text-sm mt-1">{{ form.description.errors.as_text }}</p>
-                    {% endif %}
-                </div>
-                <div>
-                    <label for="teacher" class="block text-sm font-medium text-gray-700">Assign Teacher (Optional)</label>
-                    <select name="teacher" id="teacher"
-                            class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">None</option>
-                        {% for teacher in teachers %}
-                            <option value="{{ teacher.id }}" {% if teacher == current_teacher %}selected{% endif %}>
-                                {{ teacher.get_full_name }} ({{ teacher.username }})
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <label for="students" class="block text-sm font-medium text-gray-700">Assign Students</label>
-                    <select name="students" id="students" multiple
-                            class="mt-1 block w-full border-2 border-gray-400 rounded-md shadow-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        {% for student in students %}
-                            <option value="{{ student.id }}" {% if student in class_group.userprofile_set.all %}selected{% endif %}>
-                                {{ student.get_full_name }} ({{ student.username }})
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 hover-scale transition duration-200">Save Changes</button>
+    <div class="min-h-screen flex items-center justify-center bg-blue-50 py-12 px-4 sm:px-6 lg:px-8 fade-in">
+        <div class="max-w-2xl w-full">
+            <img src="{% static 'images/classroom-banner.jpg' %}" alt="Classroom Banner" class="w-full h-32 object-cover rounded-t-lg shadow-md">
+            <div class="bg-white p-8 rounded-b-lg shadow-md">
+                <h2 class="text-3xl font-bold text-blue-900 mb-6 text-center">Edit Class Group: {{ class_group.name }}</h2>
+                <form method="POST" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-900">Name</label>
+                        <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                               class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200"
+                               placeholder="Enter class name" value="{{ form.name.value|default:'' }}" required>
+                        {% if form.name.errors %}
+                            <p class="text-red-600 text-sm mt-1">{{ form.name.errors.as_text }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-900">Description</label>
+                        <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}"
+                                  class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200"
+                                  placeholder="Enter description">{{ form.description.value|default:'' }}</textarea>
+                        {% if form.description.errors %}
+                            <p class="text-red-600 text-sm mt-1">{{ form.description.errors.as_text }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="teacher" class="block text-sm font-medium text-gray-900">Assign Teacher (Optional)</label>
+                        <select name="teacher" id="teacher"
+                                class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200">
+                            <option value="">None</option>
+                            {% for teacher in teachers %}
+                                <option value="{{ teacher.id }}" {% if teacher == current_teacher %}selected{% endif %}>
+                                    {{ teacher.get_full_name }} ({{ teacher.username }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="students" class="block text-sm font-medium text-gray-900">Assign Students</label>
+                        <select name="students" id="students" multiple
+                                class="mt-2 block w-full px-4 py-3 rounded-lg border-2 border-gray-900 bg-white text-gray-900 focus:ring-2 focus:ring-blue-900 focus:border-blue-900 transition-all duration-200">
+                            {% for student in students %}
+                                <option value="{{ student.id }}" {% if student in class_group.userprofile_set.all %}selected{% endif %}>
+                                    {{ student.get_full_name }} ({{ student.username }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-900 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 hover:scale-105 transition-all duration-300">Save Changes</button>
+                    <a href="{% url 'admin_dashboard' %}" class="block w-full text-center bg-brown-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-brown-700 hover:scale-105 transition-all duration-300 mt-4">Cancel</a>
+                </form>
             </div>
-        </form>
-        <a href="{% url 'admin_dashboard' %}" class="mt-4 inline-block bg-gray-600 text-white px-4 py-2 rounded-md font-medium hover:bg-gray-700 hover-scale transition duration-200">Cancel</a>
+        </div>
     </div>
 {% endblock %}
