@@ -9,8 +9,6 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from django.contrib.auth.decorators import user_passes_test
-from django.utils import timezone
 from io import BytesIO
 
 def user_role_required(is_superuser=False, is_staff=False, is_student=False):
@@ -309,33 +307,56 @@ def admin_dashboard(request):
 
 @user_role_required(is_superuser=True)
 def manage_schedules(request):
-    current_time = timezone.now()  # Current date and time: 2025-06-11 16:52:00+01:00
-    # Remove schedules that have passed
-    Schedule.objects.filter(end_time__lt=current_time).delete()
+    if request.method == 'POST':
+        if 'delete_schedule' in request.POST:
+            schedule_id = request.POST.get('schedule_id')
+            try:
+                schedule = get_object_or_404(Schedule, id=schedule_id)
+                schedule.delete()
+                messages.success(request, "Schedule deleted successfully.")
+            except Schedule.DoesNotExist:
+                messages.error(request, "Schedule not found.")
+            return redirect('manage_schedules')
+        elif 'course_id' in request.POST and 'day' in request.POST:
+            course_id = request.POST.get('course_id')
+            day = request.POST.get('day')
+            start_time = request.POST.get('start_time')
+            end_time = request.POST.get('end_time')
+            try:
+                course = Course.objects.get(id=course_id)
+                Schedule.objects.create(course=course, day_of_week=day, start_time=start_time, end_time=end_time)
+                messages.success(request, "Schedule added successfully.")
+            except (Course.DoesNotExist, ValueError):
+                messages.error(request, "Invalid course or time format.")
+            return redirect('manage_schedules')
 
-    schedules = Schedule.objects.all()  # Fetch remaining schedules
-    courses = Course.objects.all()  # For the form, assuming courses are selectable
+    courses = Course.objects.all()
+    schedules = Schedule.objects.all()
+    context = {'courses': courses, 'schedules': schedules}
+    return render(request, 'school_management/manage_schedules.html', context)
 
-    if request.method == "POST":
-        # Handle form submission (existing logic)
+@user_role_required(is_superuser=True)
+def edit_schedule(request, schedule_id):
+    schedule = get_object_or_404(Schedule, id=schedule_id)
+    if request.method == 'POST':
         course_id = request.POST.get('course_id')
         day = request.POST.get('day')
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
-        if course_id and day and start_time and end_time:
-            Schedule.objects.create(
-                course_id=course_id,
-                day_of_week=day,
-                start_time=start_time,
-                end_time=end_time
-            )
+        try:
+            course = Course.objects.get(id=course_id)
+            schedule.course = course
+            schedule.day_of_week = day
+            schedule.start_time = start_time
+            schedule.end_time = end_time
+            schedule.save()
+            messages.success(request, "Schedule updated successfully.")
+        except (Course.DoesNotExist, ValueError):
+            messages.error(request, "Invalid course or time format.")
         return redirect('manage_schedules')
-
-    context = {
-        'schedules': schedules,
-        'courses': courses,
-    }
-    return render(request, 'school_management/manage_schedules.html', context)
+    courses = Course.objects.all()
+    context = {'schedule': schedule, 'courses': courses}
+    return render(request, 'school_management/edit_schedule.html', context)
 
 @user_role_required(is_superuser=True)
 def manage_students(request):

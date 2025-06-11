@@ -49,20 +49,15 @@ class CourseResource(models.Model):
 
 class Schedule(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    day_of_week = models.CharField(max_length=10, choices=[('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'), ('Friday', 'Friday')])
+    day_of_week = models.CharField(max_length=10, choices=[
+        ('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'), ('Friday', 'Friday')
+    ])
     start_time = models.TimeField()
     end_time = models.TimeField()
-    # Add full datetime for comparison if needed
-    full_end_datetime = models.DateTimeField(null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        if not self.full_end_datetime:  # Set initial datetime based on current year and week
-            current_date = timezone.now().date()
-            day_map = {'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}
-            day_offset = day_map[self.day_of_week]
-            base_date = current_date - timezone.timedelta(days=current_date.weekday() - day_offset)
-            self.full_end_datetime = timezone.make_aware(timezone.datetime.combine(base_date, self.end_time))
-        super().save(*args, **kwargs)
+    def __str__(self):
+        return f"{self.course.name} - {self.day_of_week} {self.start_time}-{self.end_time}"
 
 class Grade(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': False, 'is_superuser': False})

@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/teachers/edit/<int:teacher_id>/', views.edit_teacher, name='edit_teacher'),
     path('admin/classes/', views.manage_classes, name='manage_classes'),
     path('admin/classes/edit/<int:class_id>/', views.edit_class, name='edit_class'),
-    path('admin/report_card/<int:student_id>/', views.generate_report_card, name='generate_report_card')
+    path('admin/report_card/<int:student_id>/', views.generate_report_card, name='generate_report_card'),
+    path('edit_schedule/<int:schedule_id>/', views.edit_schedule, name='edit_schedule'),
 ]
