@@ -1,16 +1,265 @@
 {% extends 'base.html' %}
 
-{% block title %}Home - School Management{% endblock %}
+{% block title %}Home - EduManage Pro{% endblock %}
 
 {% block content %}
-    <div class="fade-in max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-beige-100 rounded-lg shadow-md text-center">
-        <h1 class="text-4xl font-bold text-blue-900 mb-4">Welcome to School Management</h1>
-        <p class="text-lg text-gray-900 mb-6">Effortlessly manage students, teachers, courses, grades, and more.</p>
-        {% if not user.is_authenticated %}
-            <div class="space-x-4">
-                <a href="{% url 'login' %}" class="inline-block bg-blue-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 hover:scale-105 transition-all duration-300">Login</a>
-                <a href="{% url 'register' %}" class="inline-block bg-brown-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-brown-700 hover:scale-105 transition-all duration-300">Register</a>
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:pb-28 xl:pb-32">
+                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div class="text-center animate-fade-in">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-primary-blue sm:text-5xl md:text-6xl">
+                            <span class="block">Welcome to</span>
+                            <span class="block gradient-text">EduManage Pro</span>
+                        </h1>
+                        <p class="mt-3 max-w-md mx-auto text-base text-gray-600 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                            Transform your educational experience with our comprehensive school management system.
+                            Seamlessly manage students, teachers, courses, and academic progress all in one platform.
+                        </p>
+                        {% if not user.is_authenticated %}
+                            <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+                                <div class="rounded-md shadow">
+                                    <a href="{% url 'login' %}" class="btn-primary w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white md:py-4 md:text-lg md:px-10">
+                                        <i class="fas fa-sign-in-alt mr-2"></i>
+                                        Get Started
+                                    </a>
+                                </div>
+                                <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
+                                    <a href="{% url 'register' %}" class="btn-secondary w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white md:py-4 md:text-lg md:px-10">
+                                        <i class="fas fa-user-plus mr-2"></i>
+                                        Join Now
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </main>
             </div>
-        {% endif %}
+        </div>
     </div>
+
+    <!-- Features Section -->
+    <div class="py-16 bg-gradient-to-b from-transparent to-white/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center animate-slide-up">
+                <h2 class="text-base text-primary-gold font-semibold tracking-wide uppercase">Features</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-primary-blue sm:text-4xl">
+                    Everything you need for modern education
+                </p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 lg:mx-auto">
+                    Our comprehensive platform brings together all aspects of school management in one intuitive system.
+                </p>
+            </div>
+
+            <div class="mt-16">
+                <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+                    <div class="card-modern p-8 hover-lift animate-fade-in" style="animation-delay: 0.1s">
+                        <dt>
+                            <div class="flex items-center justify-center h-16 w-16 rounded-xl bg-gradient-to-br from-primary-blue to-accent-blue text-white mb-4 mx-auto">
+                                <i class="fas fa-user-graduate text-2xl"></i>
+                            </div>
+                            <p class="text-lg leading-6 font-bold text-primary-blue text-center">Student Management</p>
+                        </dt>
+                        <dd class="mt-4 text-base text-gray-600 text-center">
+                            Comprehensive student profiles, enrollment tracking, and academic progress monitoring.
+                        </dd>
+                    </div>
+
+                    <div class="card-modern p-8 hover-lift animate-fade-in" style="animation-delay: 0.2s">
+                        <dt>
+                            <div class="flex items-center justify-center h-16 w-16 rounded-xl bg-gradient-to-br from-primary-gold to-accent-blue text-white mb-4 mx-auto">
+                                <i class="fas fa-chalkboard-teacher text-2xl"></i>
+                            </div>
+                            <p class="text-lg leading-6 font-bold text-primary-blue text-center">Teacher Portal</p>
+                        </dt>
+                        <dd class="mt-4 text-base text-gray-600 text-center">
+                            Streamlined course management, grade tracking, and student communication tools.
+                        </dd>
+                    </div>
+
+                    <div class="card-modern p-8 hover-lift animate-fade-in" style="animation-delay: 0.3s">
+                        <dt>
+                            <div class="flex items-center justify-center h-16 w-16 rounded-xl bg-gradient-to-br from-secondary-blue to-primary-blue text-white mb-4 mx-auto">
+                                <i class="fas fa-calendar-alt text-2xl"></i>
+                            </div>
+                            <p class="text-lg leading-6 font-bold text-primary-blue text-center">Smart Scheduling</p>
+                        </dt>
+                        <dd class="mt-4 text-base text-gray-600 text-center">
+                            Intelligent timetable management with conflict detection and optimization.
+                        </dd>
+                    </div>
+
+                    <div class="card-modern p-8 hover-lift animate-fade-in" style="animation-delay: 0.4s">
+                        <dt>
+                            <div class="flex items-center justify-center h-16 w-16 rounded-xl bg-gradient-to-br from-primary-blue to-primary-gold text-white mb-4 mx-auto">
+                                <i class="fas fa-chart-line text-2xl"></i>
+                            </div>
+                            <p class="text-lg leading-6 font-bold text-primary-blue text-center">Performance Analytics</p>
+                        </dt>
+                        <dd class="mt-4 text-base text-gray-600 text-center">
+                            Advanced reporting and analytics to track academic performance and trends.
+                        </dd>
+                    </div>
+
+                    <div class="card-modern p-8 hover-lift animate-fade-in" style="animation-delay: 0.5s">
+                        <dt>
+                            <div class="flex items-center justify-center h-16 w-16 rounded-xl bg-gradient-to-br from-accent-blue to-secondary-blue text-white mb-4 mx-auto">
+                                <i class="fas fa-file-alt text-2xl"></i>
+                            </div>
+                            <p class="text-lg leading-6 font-bold text-primary-blue text-center">Digital Resources</p>
+                        </dt>
+                        <dd class="mt-4 text-base text-gray-600 text-center">
+                            Centralized resource management with easy access to course materials and documents.
+                        </dd>
+                    </div>
+
+                    <div class="card-modern p-8 hover-lift animate-fade-in" style="animation-delay: 0.6s">
+                        <dt>
+                            <div class="flex items-center justify-center h-16 w-16 rounded-xl bg-gradient-to-br from-primary-gold to-primary-blue text-white mb-4 mx-auto">
+                                <i class="fas fa-shield-alt text-2xl"></i>
+                            </div>
+                            <p class="text-lg leading-6 font-bold text-primary-blue text-center">Secure & Scalable</p>
+                        </dt>
+                        <dd class="mt-4 text-base text-gray-600 text-center">
+                            Enterprise-grade security with role-based access control and data protection.
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Courses Section -->
+    <div class="py-16 bg-gradient-to-b from-white/50 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center animate-slide-up">
+                <h2 class="text-base text-primary-gold font-semibold tracking-wide uppercase">Our Courses</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-primary-blue sm:text-4xl">
+                    Diverse Learning Opportunities
+                </p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-600 lg:mx-auto">
+                    From technology to sciences, we offer comprehensive courses designed for the modern world.
+                </p>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <!-- Software Courses -->
+                <div class="card-modern p-8 hover-lift animate-fade-in">
+                    <div class="flex items-center mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-br from-primary-blue to-accent-blue text-white mr-4">
+                            <i class="fas fa-laptop-code text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary-blue">Software Development</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fab fa-python text-primary-gold mr-3"></i>
+                            <span class="font-medium">Python Programming</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fab fa-js-square text-primary-gold mr-3"></i>
+                            <span class="font-medium">JavaScript & Web Development</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fas fa-database text-primary-gold mr-3"></i>
+                            <span class="font-medium">Database Management</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fab fa-react text-primary-gold mr-3"></i>
+                            <span class="font-medium">Modern Frameworks</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fas fa-mobile-alt text-primary-gold mr-3"></i>
+                            <span class="font-medium">Mobile App Development</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Math & Science Courses -->
+                <div class="card-modern p-8 hover-lift animate-fade-in">
+                    <div class="flex items-center mb-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-br from-primary-gold to-accent-blue text-white mr-4">
+                            <i class="fas fa-calculator text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary-blue">Mathematics & Sciences</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fas fa-square-root-alt text-primary-gold mr-3"></i>
+                            <span class="font-medium">Advanced Mathematics</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fas fa-atom text-primary-gold mr-3"></i>
+                            <span class="font-medium">Physics & Chemistry</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fas fa-chart-line text-primary-gold mr-3"></i>
+                            <span class="font-medium">Statistics & Data Analysis</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fas fa-microscope text-primary-gold mr-3"></i>
+                            <span class="font-medium">Laboratory Sciences</span>
+                        </div>
+                        <div class="flex items-center p-3 bg-light-gray rounded-lg">
+                            <i class="fas fa-brain text-primary-gold mr-3"></i>
+                            <span class="font-medium">Applied Mathematics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="card-modern p-8 animate-fade-in">
+                <dl class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="text-center">
+                        <dt class="text-4xl font-extrabold text-primary-blue">500+</dt>
+                        <dd class="mt-2 text-base font-medium text-gray-600">Active Students</dd>
+                    </div>
+                    <div class="text-center">
+                        <dt class="text-4xl font-extrabold text-primary-gold">50+</dt>
+                        <dd class="mt-2 text-base font-medium text-gray-600">Expert Teachers</dd>
+                    </div>
+                    <div class="text-center">
+                        <dt class="text-4xl font-extrabold text-accent-blue">100+</dt>
+                        <dd class="mt-2 text-base font-medium text-gray-600">Courses Available</dd>
+                    </div>
+                    <div class="text-center">
+                        <dt class="text-4xl font-extrabold text-secondary-blue">95%</dt>
+                        <dd class="mt-2 text-base font-medium text-gray-600">Success Rate</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    {% if not user.is_authenticated %}
+    <div class="py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="card-modern p-12 text-center animate-slide-up">
+                <h2 class="text-3xl font-extrabold text-primary-blue sm:text-4xl">
+                    Ready to transform your educational journey?
+                </h2>
+                <p class="mt-6 text-xl text-gray-600">
+                    Join thousands of students and educators who trust EduManage Pro for their academic success.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{% url 'register' %}" class="btn-primary inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Start Your Journey
+                    </a>
+                    <a href="{% url 'login' %}" class="btn-secondary inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Login Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

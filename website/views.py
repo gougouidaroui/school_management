@@ -69,5 +69,7 @@ def profile_setup(request):
                 return redirect('student_dashboard')
     else:
         form = UserProfileForm(instance=profile)
+        form.initial['date_of_birth'] = form['date_of_birth'].value().strftime('%Y-%m-%d')
+        print(form['date_of_birth'].value())
 
     return render(request, 'profile_setup.html', {'form': form})

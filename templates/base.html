@@ -4,100 +4,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}School Management{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     {% load static %}
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#14488C',
+                        'secondary-blue': '#9CB6D9',
+                        'accent-blue': '#14548C',
+                        'primary-gold': '#BF9004',
+                        'light-gray': '#F2F2F2',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'float': 'float 3s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background-attachment: fixed;
         }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
+
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(242, 242, 242, 0.8);
+            border: 1px solid rgba(156, 182, 217, 0.3);
         }
-        .slide-in {
-            animation: slideIn 0.3s ease-out;
+
+        .gradient-text {
+            background: linear-gradient(135deg, #14488C, #BF9004);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(20, 72, 140, 0.1), 0 10px 10px -5px rgba(20, 72, 140, 0.04);
         }
-        .hover-scale {
-            transition: transform 0.3s ease, background-color 0.3s ease;
+
+        .nav-gradient {
+            background: linear-gradient(135deg, #14488C 0%, #14548C 100%);
+            box-shadow: 0 4px 6px -1px rgba(20, 72, 140, 0.1);
         }
-        .hover-scale:hover {
-            transform: scale(1.05);
+
+        .btn-primary {
+            background: linear-gradient(135deg, #14488C 0%, #14548C 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #BF9004 0%, #14488C 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(191, 144, 4, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #BF9004 0%, #14488C 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #14488C 0%, #BF9004 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(20, 72, 140, 0.3);
+        }
+
+        .card-modern {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            border: 1px solid rgba(156, 182, 217, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-modern:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(20, 72, 140, 0.25);
+            border-color: rgba(191, 144, 4, 0.3);
         }
     </style>
 </head>
-<body class="bg-blue-50 min-h-screen flex flex-col">
-    <nav class="bg-blue-900 shadow-md fade-in">
+<body class="min-h-screen font-inter flex flex-col">
+    <!-- Navigation -->
+    <nav class="nav-gradient sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <a href="{% url 'home' %}" class="flex-shrink-0 flex items-center text-blue-50 font-bold text-xl hover:text-beige-100 transition duration-200">
-                        School Management
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="{% url 'home' %}" class="flex items-center space-x-3 text-white font-bold text-xl hover:text-secondary-blue transition-colors duration-300">
+                        <i class="fas fa-graduation-cap text-2xl"></i>
+                        <span class="hidden sm:block">EduManage Pro</span>
                     </a>
                 </div>
                 <div class="flex items-center">
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <div class="hidden md:flex space-x-8">
                         {% if user.is_authenticated %}
                             {% if user.is_superuser %}
-                                <a href="{% url 'admin_dashboard' %}" class="text-blue-50 hover:text-beige-100 px-3 py-2 text-sm font-medium transition duration-200">Admin Dashboard</a>
+                                <a href="{% url 'admin_dashboard' %}" class="text-white hover:text-primary-gold px-4 py-2 rounded-lg transition-colors duration-300 flex items-center space-x-2">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Admin Dashboard</span>
+                                </a>
                             {% elif user.is_staff %}
-                                <a href="{% url 'teacher_dashboard' %}" class="text-blue-50 hover:text-beige-100 px-3 py-2 text-sm font-medium transition duration-200">Teacher Dashboard</a>
+                                <a href="{% url 'teacher_dashboard' %}" class="text-white hover:text-primary-gold px-4 py-2 rounded-lg transition-colors duration-300 flex items-center space-x-2">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                    <span>Teacher Dashboard</span>
+                                </a>
                             {% else %}
-                                <a href="{% url 'student_dashboard' %}" class="text-blue-50 hover:text-beige-100 px-3 py-2 text-sm font-medium transition duration-200">Student Dashboard</a>
+                                <a href="{% url 'student_dashboard' %}" class="text-white hover:text-primary-gold px-4 py-2 rounded-lg transition-colors duration-300 flex items-center space-x-2">
+                                    <i class="fas fa-user-graduate"></i>
+                                    <span>Student Dashboard</span>
+                                </a>
                             {% endif %}
                             {% if not user.is_superuser %}
-                                <a href="{% url 'profile_setup' %}" class="text-blue-50 hover:text-beige-100 px-3 py-2 text-sm font-medium transition duration-200">Profile</a>
+                                <a href="{% url 'profile_setup' %}" class="text-white hover:text-primary-gold px-4 py-2 rounded-lg transition-colors duration-300 flex items-center space-x-2">
+                                    <i class="fas fa-user-cog"></i>
+                                    <span>Profile</span>
+                                </a>
                             {% endif %}
-                            <a href="{% url 'logout' %}" class="text-blue-50 hover:text-beige-100 px-3 py-2 text-sm font-medium transition duration-200">Logout</a>
+                            <a href="{% url 'logout' %}" class="text-white hover:text-red-300 px-4 py-2 rounded-lg transition-colors duration-300 flex items-center space-x-2">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
                         {% else %}
-                            <a href="{% url 'login' %}" class="text-blue-50 hover:text-beige-100 px-3 py-2 text-sm font-medium transition duration-200">Login</a>
-                            <a href="{% url 'register' %}" class="text-blue-50 hover:text-beige-100 px-3 py-2 text-sm font-medium transition duration-200">Register</a>
+                            <a href="{% url 'login' %}" class="text-white hover:text-primary-gold px-4 py-2 rounded-lg transition-colors duration-300">Login</a>
+                            <a href="{% url 'register' %}" class="btn-secondary text-white px-6 py-2 rounded-lg font-medium">Register</a>
                         {% endif %}
                     </div>
-                    <div class="-mr-2 flex items-center sm:hidden">
-                        <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-blue-50 hover:text-beige-100 hover:bg-blue-700 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden">
+                        <button type="button" class="text-white hover:text-primary-gold p-2 rounded-lg" id="mobile-menu-button">
+                            <i class="fas fa-bars text-xl"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="sm:hidden hidden" id="mobile-menu">
-            <div class="pt-2 pb-3 space-y-1">
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-4 py-2 space-y-1 bg-primary-blue">
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
-                        <a href="{% url 'admin_dashboard' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-blue-50 hover:text-beige-100 hover:bg-blue-700">Admin Dashboard</a>
+                        <a href="{% url 'admin_dashboard' %}" class="block text-white hover:text-primary-gold px-3 py-2 rounded-lg">Admin Dashboard</a>
                     {% elif user.is_staff %}
-                        <a href="{% url 'teacher_dashboard' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-blue-50 hover:text-beige-100 hover:bg-blue-700">Teacher Dashboard</a>
+                        <a href="{% url 'teacher_dashboard' %}" class="block text-white hover:text-primary-gold px-3 py-2 rounded-lg">Teacher Dashboard</a>
                     {% else %}
-                        <a href="{% url 'student_dashboard' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-blue-50 hover:text-beige-100 hover:bg-blue-700">Student Dashboard</a>
+                        <a href="{% url 'student_dashboard' %}" class="block text-white hover:text-primary-gold px-3 py-2 rounded-lg">Student Dashboard</a>
                     {% endif %}
                     {% if not user.is_superuser %}
-                        <a href="{% url 'profile_setup' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-blue-50 hover:text-beige-100 hover:bg-blue-700">Profile</a>
+                        <a href="{% url 'profile_setup' %}" class="block text-white hover:text-primary-gold px-3 py-2 rounded-lg">Profile</a>
                     {% endif %}
-                    <a href="{% url 'logout' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-blue-50 hover:text-beige-100 hover:bg-blue-700">Logout</a>
+                    <a href="{% url 'logout' %}" class="block text-white hover:text-red-300 px-3 py-2 rounded-lg">Logout</a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-blue-50 hover:text-beige-100 hover:bg-blue-700">Login</a>
-                    <a href="{% url 'register' %}" class="block pl-3 pr-4 py-2 text-base font-medium text-blue-50 hover:text-beige-100 hover:bg-blue-700">Register</a>
+                    <a href="{% url 'login' %}" class="block text-white hover:text-primary-gold px-3 py-2 rounded-lg">Login</a>
+                    <a href="{% url 'register' %}" class="block text-white hover:text-primary-gold px-3 py-2 rounded-lg">Register</a>
                 {% endif %}
             </div>
         </div>
     </nav>
+
+    <!-- Main Content -->
     <main class="flex-grow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 fade-in">
+        <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {% if messages %}
                 {% for message in messages %}
-                    <div class="bg-beige-100 border-l-4 border-blue-900 text-gray-900 p-4 mb-4 slide-in" role="alert">
-                        <p>{{ message }}</p>
+                    <div class="glass-effect border-l-4 border-primary-gold text-primary-blue p-4 mb-6 rounded-lg animate-fade-in" role="alert">
+                        <div class="flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            <p>{{ message }}</p>
+                        </div>
                     </div>
                 {% endfor %}
             {% endif %}
@@ -105,16 +214,39 @@
             {% endblock %}
         </div>
     </main>
-    <footer class="bg-beige-100 shadow-md mt-8 fade-in">
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-gray-900">
-            © 2025 School Management. All rights reserved.
+
+    <!-- Footer -->
+    <footer class="nav-gradient">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-white">
+                <div class="flex justify-center items-center space-x-4 mb-4">
+                    <i class="fas fa-graduation-cap text-2xl text-primary-gold"></i>
+                    <span class="font-bold text-xl">EduManage Pro</span>
+                </div>
+                <p class="text-secondary-blue mb-4">Empowering Education Through Technology</p>
+                <div class="flex justify-center space-x-6 text-sm">
+                    <span>© 2025 EduManage Pro. All rights reserved.</span>
+                </div>
+            </div>
         </div>
     </footer>
+
     <script>
+        // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+        });
+
+        // Add smooth scrolling to all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>
