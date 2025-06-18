@@ -1,3 +1,4 @@
+from types import NoneType
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from .forms import SignUpForm, LoginForm, UserProfileForm
@@ -69,7 +70,7 @@ def profile_setup(request):
                 return redirect('student_dashboard')
     else:
         form = UserProfileForm(instance=profile)
-        form.initial['date_of_birth'] = form['date_of_birth'].value().strftime('%Y-%m-%d')
-        print(form['date_of_birth'].value())
+        if form['date_of_birth'].value() != None:
+            form.initial['date_of_birth'] = form['date_of_birth'].value().strftime('%Y-%m-%d')
 
     return render(request, 'profile_setup.html', {'form': form})
